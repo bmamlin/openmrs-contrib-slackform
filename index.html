@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
+        <script>
+            // Freaky workaround for Safari bug (CSP 3.0 noncompliance)
+            // https://github.com/google/google-api-javascript-client/issues/397
+            var scriptElement = document.createElement('script');
+            scriptElement.nonce = 'this_is_my_nonce';
+            scriptElement.setAttribute('recaptcha-v3-script', '');
+            var scriptBase = 'https://www.google.com/recaptcha/api.js';
+
+            function onSubmit(token) {
+                document.getElementById("slack-invite-form").submit();
+            }
+        </script>
+        <style type="text/css">
+            h1 {
+                font-size 1.8;
+                color: black;
+                font-family: arial;
+                text-align: center;
+            }
+            .slack-invite {
+                border: thin solid grey;
+                border-radius: 1em;
+                width: 25em;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 1em;
+                text-align: center;
+                font-family: arial;
+            }
+            .slack-invite h1 {
+                font-size: 1.8em;
+                color: black;
+            }
+            .slack-invite input {
+                font-size: 1.5em;
+            }
+            .slack-invite button {
+                margin-top: 0.5em;
+                font-size: 1.5em;
+                color: black;
+                background-color: #E6A424;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Redirecting to OpenMRS on Slack...</h1>
+        <div class="slack-invite">
+            <h1>Not already a member?</h1>
+            <h1>Join OpenMRS on Slack</h1>
+            <form
+                id="slack-invite-form"
+                action="https://docs.google.com/forms/u/1/d/e/1FAIpQLSci3nR7MNXGLWpionr-g-folw_kJcIO9NpFvJevMYXBYu8rhQ/formResponse"
+                method="post"
+                target="_blank"
+            >
+                <input
+                    autocomplete="email"
+                    name="emailAddress"
+                    placeholder="Your email"
+                    type="email"
+                    required="true"
+                >
+                <button class="g-recaptcha" data-sitekey="6LdciKYUAAAAAOrOrCQHP_iSh31F4kfL3nO2t7ez" data-callback='onSubmit'>Invite Me!</button>
+            </form>
+        </div>
+        <script>
+            window.location.href="slack://open?team=T03U4PGDY";
+        </script>
+    </body>
+</html>
