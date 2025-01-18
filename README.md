@@ -6,8 +6,8 @@ Thanks to [this blog post](https://intoli.com/blog/make-a-public-slack-community
 
 ---
 
-* We created an "OpenMRS Slack invitation request" Google form that just takes a user email and puts loads it into a "Slack Signups" spreadsheet. Both the form and spreadsheet are stored in the OpenMRS Infrastructure Google Shared Drive folder. 
-* We scraped the form's submit action by inspecting the Google Form and put that into our [own signup HTML form](index.html).
+* We created an "OpenMRS Slack invitation request" Google form that just takes a user email and puts it into a "Slack Signups" spreadsheet (i.e., timestamp and email address on each row). Both the form and spreadsheet are stored in the OpenMRS Infrastructure Google Shared Drive folder. 
+* We scraped the form's submit action by inspecting the POST produced by submitting the Google Form and put that into our [own signup HTML form](index.html).
 * We created an "OpenMRS Inviter" user in Slack with admin privs and generated a slack API token for that user to use for generating invitations.
 * Using the Script Editor for the spreadsheet, we added the following script:
 
@@ -32,6 +32,7 @@ function sendInvitation(event) {
   const emailAddress = event.values[1];
 
   // Log a message about sending the invitation.
+  // Logger.log(JSON.stringify(event)); // log raw event for debugging
   Logger.log('Invitation request received at ' + timestamp + ' for ' + emailAddress + '.');
 
   // Use Slack's API to send the invitation.
@@ -82,4 +83,4 @@ function attachSendInvitationHandler() {
 }
 ```
 
-Finally, running the `attachSendInvitationHandler()` method once registers the script to run on form submissions and, the first time we run it, prompts for us to grant permissions for the script.
+Finally, running the `attachSendInvitationHandler()` method once registers the script to run on form submissions and, the first time we run it, prompts for us to grant permissions for the script. After that is done, any submissions for the Google Form (or, in our case, our custom form that mimics the Google Form submission) will add a row to the spreadsheet and then invoke `sendInvitation(event)`.
